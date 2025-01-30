@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blindstick - E-Commerce</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 font-sans min-h-screen">
+
+<header class="bg-black/50 backdrop-blur-md text-white p-6 flex justify-between items-center fixed w-full top-0 z-50">
+    <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Blindstick</h1>
+    <nav class="space-x-4">
+        <button onclick="showModal('registerModal')" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-2 px-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-blue-500/50">Register</button>
+        <button onclick="showModal('loginModal')" class="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white py-2 px-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-purple-500/50">Login</button>
+        <button onclick="showModal('helplineModal')" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-2 px-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-green-500/50">Helpline</button>
+        <button onclick="showModal('contactModal')" class="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white py-2 px-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-yellow-500/50">Contact</button>
+        <button onclick="showModal('aboutModal')" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-2 px-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-red-500/50">About Us</button>
+    </nav>
+</header>
+
+<div class="flex justify-center items-center min-h-screen gap-8 px-4 pt-24 pb-20">
+    <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl text-center transition-all duration-500 hover:scale-105 hover:shadow-blue-500/20 group">
+        <div class="relative overflow-hidden rounded-xl mb-6">
+            <img src="uploads/s.jpg" 
+                 alt="Smart Blindstick" 
+                 class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                 onerror="this.src='https://via.placeholder.com/250x250?text=Smart+Blindstick'"
+            >
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </div>
+        <h2 class="text-2xl font-bold text-white mb-2">Smart Blindstick</h2>
+        <p class="text-blue-400 text-xl mb-6">$99.99</p>
+        <button onclick="showModal('cartModal')" class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-blue-500/50 transform hover:-translate-y-1">
+            Add to Cart
+        </button>
+    </div>
+    
+    <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl text-center transition-all duration-500 hover:scale-105 hover:shadow-purple-500/20">
+        <h2 class="text-2xl font-bold text-white mb-4">Coming Soon</h2>
+        <p class="text-gray-300 text-lg">Stay tuned for exciting updates!</p>
+        <div class="mt-6 animate-pulse">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 mx-auto"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Chat Widget -->
+<div id="chatWidget" class="fixed bottom-20 right-5 flex flex-col items-end">
+    <div id="chatBox" class="hidden bg-white/10 backdrop-blur-lg p-4 rounded-2xl shadow-2xl mb-4 w-80">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-white font-bold">Chat Support</h3>
+            <button onclick="toggleChat()" class="text-gray-300 hover:text-white">&times;</button>
+        </div>
+        <div id="chatMessages" class="space-y-4 max-h-96 overflow-y-auto mb-4">
+            <div class="bg-blue-500/20 p-3 rounded-lg text-white">
+                Hello! How can we help you today?
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <input type="text" id="messageInput" placeholder="Type your message..." class="flex-1 bg-white/10 text-white placeholder-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button onclick="sendMessage()" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600">Send</button>
+        </div>
+    </div>
+    <button onclick="toggleChat()" class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white py-3 px-8 rounded-full shadow-lg transition-all duration-300 hover:shadow-blue-500/50 transform hover:-translate-y-1">
+        Chat with us
+    </button>
+</div>
+
+<!-- Modals -->
+<!-- Register Modal -->
+<div id="registerModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+    <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-96">
+        <h2 class="text-2xl font-bold text-white mb-4">Register</h2>
+        <form action="register.php" method="POST">
+            <input type="text" name="name" placeholder="Name" class="w-full bg-white/10 text-white placeholder-gray-400 rounded-lg px-4 py-2 mb-4" required>
+            <input type="email" name="email" placeholder="Email" class="w-full bg-white/10 text-white placeholder-gray-400 rounded-lg px-4 py-2 mb-4" required>
+            <input type="password" name="password" placeholder="Password" class="w-full bg-white/10 text-white placeholder-gray-400 rounded-lg px-4 py-2 mb-4" required>
+            <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 rounded-lg mb-4">Register</button>
+        </form>
+        <p class="text-gray-400 text-center mb-4">Already have an account? 
+            <button onclick="showModal('loginModal'); closeModal('registerModal')" class="text-blue-400 hover:text-blue-300">Login here</button>
+        </p>
+        <button onclick="closeModal('registerModal')" class="text-gray-400 hover:text-white">Close</button>
+    </div>
+</div>
+
+<!-- Login Modal -->
+<div id="loginModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+    <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-96">
+        <h2 class="text-2xl font-bold text-white mb-4">Login</h2>
+        <form action="login.php" method="POST">
+            <input type="email" name="email" placeholder="Email" class="w-full bg-white/10 text-white placeholder-gray-400 rounded-lg px-4 py-2 mb-4" required>
+            <input type="password" name="password" placeholder="Password" class="w-full bg-white/10 text-white placeholder-gray-400 rounded-lg px-4 py-2 mb-4" required>
+            <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 rounded-lg mb-4">Login</button>
+        </form>
+        <p class="text-gray-400 text-center mb-4">Don't have an account? 
+            <button onclick="showModal('registerModal'); closeModal('loginModal')" class="text-blue-400 hover:text-blue-300">Register here</button>
+        </p>
+        <button onclick="closeModal('loginModal')" class="text-gray-400 hover:text-white">Close</button>
+    </div>
+</div>
+<!-- Payment Modal -->
+<div id="cartModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+    <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-96">
+        <h2 class="text-2xl font-bold text-white mb-4">Choose Payment Method</h2>
+        <div class="space-y-4">
+            <!-- Card Payment -->
+            <button onclick="showPaymentForm('card')" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 10h18M7 15h.01M11 15h2" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Pay with Card
+            </button>
+
+            <!-- bKash Payment -->
+            <button onclick="showPaymentForm('bkash')" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2">
+                <span class="font-bold">b</span>
+                Pay with bKash
+            </button>
+
+            <!-- Nagad Payment -->
+            <button onclick="showPaymentForm('nagad')" class="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2">
+                <span class="font-bold">N</span>
+                Pay with Nagad
+            </button>
+        </div>
+
+        <!-- Payment Forms -->
+        <div id="cardPaymentForm" class="hidden mt-4">
+            <div id="card-element" class="bg-white/10 rounded-lg p-4 mb-4"></div>
+            <div id="card-errors" class="text-red-500 mb-4"></div>
+            <button onclick="processCardPayment()" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 rounded-lg">
+                Pay Now
+            </button>
+        </div>
+
+        <div id="bkashPaymentForm" class="hidden mt-4">
+            <input type="text" placeholder="bKash Number" class="w-full bg-white/10 text-white placeholder-gray-400 rounded-lg px-4 py-2 mb-4">
+            <button onclick="processMobilePayment('bkash')" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white py-2 rounded-lg">
+                Pay with bKash
+            </button>
+        </div>
+
+        <div id="nagadPaymentForm" class="hidden mt-4">
+            <input type="text" placeholder="Nagad Number" class="w-full bg-white/10 text-white placeholder-gray-400 rounded-lg px-4 py-2 mb-4">
+            <button onclick="processMobilePayment('nagad')" class="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-2 rounded-lg">
+                Pay with Nagad
+            </button>
+        </div>
+
+        <button onclick="closeModal('cartModal')" class="mt-4 text-gray-400 hover:text-white">Close</button>
+    </div>
+</div>
+
+
+
+<div id="helplineModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+    <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-96">
+        <h2 class="text-2xl font-bold text-white mb-4">Helpline</h2>
+        <p class="text-gray-300 mb-4">24/7 Customer Support: 1-800-BLINDSTICK</p>
+        <button onclick="closeModal('helplineModal')" class="text-gray-400 hover:text-white">Close</button>
+    </div>
+</div>
+
+<div id="contactModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+    <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-96">
+        <h2 class="text-2xl font-bold text-white mb-4">Contact Us</h2>
+        <input type="text" placeholder="Name" class="w-full bg-white/10 text-white placeholder-gray-400 rounded-lg px-4 py-2 mb-4">
+        <input type="email" placeholder="Email" class="w-full bg-white/10 text-white placeholder-gray-400 rounded-lg px-4 py-2 mb-4">
+        <textarea placeholder="Message" class="w-full bg-white/10 text-white placeholder-gray-400 rounded-lg px-4 py-2 mb-4 h-32"></textarea>
+        <button onclick="closeModal('contactModal')" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 rounded-lg">Send Message</button>
+        <button onclick="closeModal('contactModal')" class="mt-4 text-gray-400 hover:text-white">Close</button>
+    </div>
+</div>
+
+<div id="aboutModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+    <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-96">
+        <h2 class="text-2xl font-bold text-white mb-4">About Us</h2>
+        <p class="text-gray-300 mb-4">We are dedicated to creating innovative solutions for the visually impaired. Our smart blindstick combines cutting-edge technology with intuitive design to enhance mobility and independence.</p>
+        <button onclick="closeModal('aboutModal')" class="text-gray-400 hover:text-white">Close</button>
+    </div>
+</div>
+
+<footer class="bg-black/50 backdrop-blur-md text-white text-center py-6 fixed bottom-0 w-full">
+    <p class="text-gray-300">&copy; 2025 Blindstick. All rights reserved.</p>
+</footer>
+
+<script>
+function showModal(modalId) {
+    document.getElementById(modalId).style.display = 'flex';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+function toggleChat() {
+    const chatBox = document.getElementById('chatBox');
+    chatBox.classList.toggle('hidden');
+    if (!chatBox.classList.contains('hidden')) {
+        document.getElementById('messageInput').focus();
+    }
+}
+
+function sendMessage() {
+    const input = document.getElementById('messageInput');
+    const message = input.value.trim();
+    
+    if (message) {
+        const messagesDiv = document.getElementById('chatMessages');
+        const userMessage = document.createElement('div');
+        userMessage.className = 'bg-purple-500/20 p-3 rounded-lg text-white ml-auto max-w-[80%]';
+        userMessage.textContent = message;
+        messagesDiv.appendChild(userMessage);
+        
+        // Simulate response (you can replace this with actual backend integration)
+        setTimeout(() => {
+            const botMessage = document.createElement('div');
+            botMessage.className = 'bg-blue-500/20 p-3 rounded-lg text-white max-w-[80%]';
+            botMessage.textContent = "Thank you for your message. Our support team will get back to you soon.";
+            messagesDiv.appendChild(botMessage);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }, 1000);
+        
+        input.value = '';
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+}
+
+function addToCart() {
+    // Simulate adding to cart
+    alert('Product added to cart!');
+}
+
+// Allow sending message with Enter key
+document.getElementById('messageInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        sendMessage();
+    }
+});
+
+// Close modals when clicking outside
+window.onclick = function(event) {
+    const modals = document.getElementsByClassName('fixed inset-0');
+    for (let modal of modals) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+}
+function showPaymentForm(type) {
+    // Hide all forms first
+    document.getElementById('cardPaymentForm').classList.add('hidden');
+    document.getElementById('bkashPaymentForm').classList.add('hidden');
+    document.getElementById('nagadPaymentForm').classList.add('hidden');
+    
+    // Show selected form
+    document.getElementById(type + 'PaymentForm').classList.remove('hidden');
+}
+
+function processMobilePayment(type) {
+    // Simulate payment processing
+    alert(`Processing ${type} payment... Please check your phone for confirmation.`);
+    setTimeout(() => {
+        alert('Payment successful!');
+        closeModal('cartModal');
+    }, 2000);
+}
+</script>
+
+</body>
+</html>
